@@ -90,7 +90,7 @@ $(document).ready(function () {
     query: `data=${JSON.stringify(data)}`,
   });
 
-  socket.on("newUserConnected", async () => {
+  socket.on("changeInUsers", async () => {
     const url = new URL(`${baseURL}rooms`);
     const result = await fetch(url);
 

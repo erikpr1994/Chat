@@ -14,4 +14,14 @@ const addNewConnectedUser = async (email, roomId) => {
   }
 };
 
-module.exports = { addNewConnectedUser };
+const deleteConnectedUser = async (email, roomId) => {
+  if (rooms[roomId]) {
+    if (userHelper.getUserFromEmail(email)) {
+      rooms[roomId].users.filter(
+        (user) => user !== userHelper.getUserFromEmail(email).email
+      );
+    }
+  }
+};
+
+module.exports = { addNewConnectedUser, deleteConnectedUser };
