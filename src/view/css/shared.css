@@ -4,6 +4,8 @@
   --middle-yellow: #f9e900ff;
   --rajah: #f6af65ff;
   --shocking-pink: #ed33b9ff;
+  --isabelline: #efe9e7ff;
+  --hover-isabelline: rgb(245, 241, 240);
 }
 
 * {
@@ -34,7 +36,6 @@ main {
   width: 100vw;
   height: 100vh;
   display: grid;
-  place-items: center;
 }
 
 li {

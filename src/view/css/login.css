@@ -52,3 +52,7 @@ button {
   background-color: var(--middle-yellow);
   color: var(--royal-blue-dark);
 }
+
+main {
+  place-items: center;
+}

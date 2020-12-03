@@ -1,0 +1,95 @@
+main {
+  grid-template-columns: 30% 1fr;
+  grid-template-rows: 15% 1fr 10%;
+}
+
+.me {
+  grid-column: 1;
+  grid-row: 1;
+  background-color: var(--royal-blue-dark);
+  color: white;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.profile-img {
+  width: 6em;
+  height: 6em;
+  border-radius: 100%;
+}
+
+.chats {
+  grid-column: 1;
+  grid-row: 2;
+  background-color: var(--isabelline);
+  overflow: scroll;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.open-chat {
+  width: 100%;
+  height: 140px;
+  border-bottom: 1px solid white;
+  display: grid;
+  grid-template-columns: 1fr 75%;
+  place-items: center;
+}
+
+.open-chat:hover {
+  background-color: var(--hover-isabelline);
+  cursor: pointer;
+}
+
+.chat-img {
+  width: 6em;
+  height: 6em;
+  border-radius: 100%;
+}
+
+.message-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding-left: 1em;
+  justify-self: start;
+  height: 90%;
+}
+
+.message-data h3 {
+  color: var(--royal-blue-dark);
+}
+
+.message-data p {
+  color: var(--dark-turquoise);
+}
+
+.settings {
+  grid-column: 1;
+  grid-row: 3;
+  background-color: var(--royal-blue-dark);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.settings svg:hover {
+  cursor: pointer;
+}
+
+.chat {
+  grid-column: 2;
+  grid-row: 1/-1;
+  background-image: radial-gradient(var(--royal-blue-dark) 1px, #fdfdfd 1px),
+    radial-gradient(var(--royal-blue-dark) 1px, #fdfdfd 1px);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
