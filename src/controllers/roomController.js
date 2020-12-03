@@ -1,6 +1,5 @@
-const { rooms } = require("../models/index");
-const config = require("../config");
-const userHelper = require("../helpers/user");
+const rooms = require("../models/roomModel");
+const userHelper = require("../helpers/userHelper");
 
 const getRooms = async (_, res) => {
   res.statusCode = 200;
@@ -8,9 +7,7 @@ const getRooms = async (_, res) => {
 };
 
 const getRoom = async (req, res) => {
-  const reqURL = new URL(`http://${config.hostname}${req.url}`);
-
-  const roomId = reqURL.searchParams.get("roomId");
+  const { roomId } = req.params;
 
   if (rooms[roomId]) {
     res.statusCode = 200;
@@ -28,8 +25,8 @@ const createRoom = async (req, res) => {
 
   if (users)
     users.forEach((user) => {
-      if (userHelper.checkIfUserExists(user)) {
-        userIDs.push(userHelper.getUserId(user));
+      if (userHelper.getUserFromEmail(user)) {
+        userIDs.push(userHelper.getUserFromEmail(user));
       } else {
         res.statusCode = 404;
         res.end("Some of the users doesn't exists");
@@ -51,18 +48,22 @@ const addUserToRoom = async (req, res) => {
   }
 
   if (rooms[roomId]) {
-    if (userHelper.checkIfUserExists(email)) {
-      rooms[roomId].users.push(userHelper.getUserId(email));
+    if (userHelper.getUserFromEmail(email)) {
       res.statusCode = 201;
       res.end("User added to the room");
     } else {
       res.statusCode = 404;
       res.end("The user doesn't exists");
     }
+  } else {
+    res.statusCode = 404;
+    res.end("The room doesn't exists");
   }
-
-  res.statusCode = 404;
-  res.end("The room doesn't exists");
 };
 
-module.exports = { getRooms, getRoom, createRoom, addUserToRoom };
+module.exports = {
+  getRooms,
+  getRoom,
+  createRoom,
+  addUserToRoom,
+};

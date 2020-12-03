@@ -35,7 +35,7 @@ const getUsers = async () => {
     const actualUser = webStorage.getUser();
 
     users.forEach((user) => {
-      if (user !== actualUser) appendUser(user);
+      if (user.email === actualUser) appendUser(user.email);
     });
   }
 };
@@ -115,7 +115,7 @@ const saveUserInRoom = async (id, email) => {
     },
     body: JSON.stringify({
       roomId: id,
-      email,
+      email: email,
     }),
   });
 
@@ -124,4 +124,17 @@ const saveUserInRoom = async (id, email) => {
   }
 };
 
-export default { saveUserInRoom };
+const redirectToRoom = async (roomId) => {
+  // Hacer esto cuando estemos en chat.html para poder pintar los datos?
+  const url = new URL(`${baseURL}room/${roomId}`);
+
+  const result = await fetch(url);
+
+  webStorage.connectedRoom(roomId);
+
+  if (result.status === 200) {
+    window.location.replace("/chat.html");
+  }
+};
+
+export default { saveUserInRoom, redirectToRoom };
