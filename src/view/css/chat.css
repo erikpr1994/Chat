@@ -53,13 +53,14 @@ main {
 }
 
 .message-data {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  padding-left: 1em;
-  justify-self: start;
+  display: grid;
+  grid-template-rows: repeat(2, 50%);
+  place-items: center;
+  padding: 1em 1em;
   height: 90%;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
 }
 
 .message-data h3 {
@@ -68,6 +69,12 @@ main {
 
 .message-data p {
   color: var(--dark-turquoise);
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
 }
 
 .settings {
