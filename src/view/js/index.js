@@ -1,37 +1,20 @@
-import webStorage from "./webstorage.js";
-
-$(document).ready(function () {
-  $("ul.switcher li").click(function () {
-    const tabId = $(this).attr("data-tab");
-
-    $("li").removeClass("active");
-
-    $("div.tab-pane").removeClass("active");
-
-    $(this).addClass("active");
-    $("#" + tabId).addClass("active");
-  });
-
-  document
-    .getElementById("guardar_claves_login")
-    .addEventListener("click", function () {
-      login();
-    });
-
-  document
-    .getElementById("guardar_claves_signin")
-    .addEventListener("click", function () {
-      register();
-    });
-});
+import storage from "./webstorage.js";
 
 const baseURL = "http://localhost:3000/";
 
-const login = async () => {
-  const email = document.getElementById("login_email").value;
-  const password = document.getElementById("login_password").value;
+window.addEventListener("load", (e) => {
+  e.preventDefault();
+  document.getElementById("login").addEventListener("click", login);
+  document.getElementById("register").addEventListener("click", register);
+});
+
+const login = async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   const url = new URL(`${baseURL}login`);
+  console.log(url);
   const params = { email, password };
 
   Object.keys(params).forEach((key) =>
@@ -41,17 +24,17 @@ const login = async () => {
   const result = await fetch(url);
 
   if (result.status === 200) {
-    webStorage.saveUser(null, email);
-    window.location.replace(`${baseURL}rooms.html`);
+    storage.saveUser(null, email);
+    window.location.replace(`${baseURL}main.html`);
   } else {
     alert("Usuario o email incorrecto");
   }
 };
 
-const register = async () => {
-  const email = document.getElementById("signin_email").value;
-  const name = document.getElementById("signin_username").value;
-  const password = document.getElementById("signin_password").value;
+const register = async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   const url = new URL(`${baseURL}register`);
 
@@ -64,13 +47,11 @@ const register = async () => {
     body: JSON.stringify({
       email,
       password,
-      name,
     }),
   });
 
   if (result.status === 201) {
-    webStorage.registerUser(name, email);
-    window.location.replace(`${baseURL}rooms.html`);
+    window.location.replace(`${baseURL}main.html`);
   } else {
     alert("El usuario ya existe");
   }
