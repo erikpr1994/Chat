@@ -106,13 +106,11 @@ main {
 
 .messages {
   padding: 1em;
-  max-width: 100%;
-  height: 100%;
   display: grid;
-  grid-template-columns: 100%;
+  grid-template-columns: 1fr;
   align-items: stretch;
   grid-auto-rows: minmax(min-content, max-content);
-  gap: 10px;
+  gap: 1em;
   overflow: auto;
 }
 
@@ -158,6 +156,8 @@ main {
 .type {
   width: 100%;
   display: flex;
+  border-top: 1px solid var(--dark-turquoise);
+  background-color: white;
 }
 
 .type form {
@@ -171,6 +171,8 @@ main {
 .type .writter {
   width: 90%;
   padding: 0.5em;
+  height: auto;
+  white-space: normal;
 }
 
 .type button {
