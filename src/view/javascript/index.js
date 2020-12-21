@@ -1,4 +1,5 @@
-import storage from "./webstorage.js";
+import storage from "./localstorage.js";
+import fetchRequest from "./fetch.js";
 
 const baseURL = "http://localhost:3000/";
 
@@ -14,7 +15,7 @@ const login = async (e) => {
   const password = document.getElementById("password").value;
 
   const url = new URL(`${baseURL}login`);
-  console.log(url);
+
   const params = { email, password };
 
   Object.keys(params).forEach((key) =>
@@ -24,7 +25,10 @@ const login = async (e) => {
   const result = await fetch(url);
 
   if (result.status === 200) {
-    storage.saveUser(null, email);
+    const { id } = await result.json();
+    storage.saveLoggedUserId(id);
+    storage.saveLooggedUserEmail(email);
+    await fetchRequest.getUserData(email);
     window.location.replace(`${baseURL}main.html`);
   } else {
     alert("Usuario o email incorrecto");
@@ -35,6 +39,7 @@ const register = async (e) => {
   e.preventDefault();
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+  const name = document.getElementById("name").value;
 
   const url = new URL(`${baseURL}register`);
 
@@ -47,10 +52,15 @@ const register = async (e) => {
     body: JSON.stringify({
       email,
       password,
+      name,
     }),
   });
 
   if (result.status === 201) {
+    const res = await result.json();
+    storage.saveLoggedUserId(res);
+    storage.saveLooggedUserEmail(email);
+    await fetchRequest.getUserData(email);
     window.location.replace(`${baseURL}main.html`);
   } else {
     alert("El usuario ya existe");

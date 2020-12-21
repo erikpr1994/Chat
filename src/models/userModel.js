@@ -1,6 +1,12 @@
-const users = [
-  { email: "erikpastorrios1994@gmail.com", password: "test1234", name: "Erik" },
-  { email: "pepito@gmail.com", password: "test1234", name: "Pepito" },
-];
+const database = require("./index");
 
-module.exports = users;
+const userSchema = new database.Schema({
+  email: String,
+  name: String,
+  password: String,
+  friends: [],
+});
+
+const user = database.model("user", userSchema);
+
+module.exports = user;

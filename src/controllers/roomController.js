@@ -1,4 +1,4 @@
-const rooms = require("../models/roomModel");
+const rooms = require("../models/chatModel");
 const userHelper = require("../helpers/userHelper");
 
 const getRooms = async (_, res) => {

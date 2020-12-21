@@ -46,6 +46,11 @@ main {
   cursor: pointer;
 }
 
+.add-friend {
+  text-align: center;
+  grid-template-columns: 100%;
+}
+
 .chat-img {
   width: 6em;
   height: 6em;

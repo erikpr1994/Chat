@@ -5,7 +5,7 @@ const config = require("./config");
 const {
   addNewConnectedUser,
   deleteConnectedUser,
-} = require("./helpers/roomHelper");
+} = require("./helpers/chatHelper");
 
 module.exports = function () {
   const server = http
