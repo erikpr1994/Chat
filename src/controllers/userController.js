@@ -52,8 +52,6 @@ const getData = async (req, res) => {
   let chats;
   user[0] ? (chats = await chatHelper.getChats(user[0]._id)) : (chats = []);
 
-  console.log(`friendsToSend is ${friendsToSend}`);
-
   res.json({ friends: friendsToSend, chats }).status(200);
 };
 
@@ -80,7 +78,7 @@ const addFriend = async (req, res) => {
       }
     }
   } catch (e) {
-    console.log(e);
+    throw new Error(e);
   }
 };
 

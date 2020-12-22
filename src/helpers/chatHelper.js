@@ -7,8 +7,13 @@ const addNewUserToMultiChat = async (email, chatId) => {
 };
 
 const createChat = async (name, users, multichat) => {
-  const chat = new ChatModel({ name, users, multichat });
-  chat.save();
+  try {
+    const chat = new ChatModel({ name, users, multichat });
+    const chatCreated = chat.save();
+    return chatCreated;
+  } catch (e) {
+    return false;
+  }
 };
 
 const getChats = async (userId) => {
@@ -21,4 +26,13 @@ const getChats = async (userId) => {
   return userChats;
 };
 
-module.exports = { createChat, addNewUserToMultiChat, getChats };
+const saveMessage = async (messageReceived) => {
+  const { chatId, message, date, loggedUser } = messageReceived;
+  const chat = await ChatModel.findById(chatId);
+
+  const newMessage = { message, date, loggedUser };
+  chat.messages.push(newMessage);
+  await chat.save();
+};
+
+module.exports = { createChat, addNewUserToMultiChat, getChats, saveMessage };

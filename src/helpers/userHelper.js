@@ -41,8 +41,6 @@ const getFriends = async (friends) => {
     return { id: user._id, name: user.name, email: user.email };
   });
 
-  console.log(realFriends);
-
   return realFriends;
 };
 

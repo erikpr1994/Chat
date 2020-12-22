@@ -1,7 +1,7 @@
 const saveData = (data) => {
   const { friends, chats } = data;
-  saveFriends(friends);
-  saveChats(chats);
+  if (friends) saveFriends(friends);
+  if (chats) saveChats(chats);
 };
 
 const saveFriends = (friends) => {
@@ -36,6 +36,14 @@ const getLoggedUserEmail = () => {
   return localStorage.getItem("loggedUserEmail");
 };
 
+const saveActiveChatId = (chatId) => {
+  localStorage.setItem("activeChat", chatId);
+};
+
+const getActiveChatId = () => {
+  return localStorage.getItem("activeChat");
+};
+
 export default {
   saveData,
   getFriends,
@@ -44,4 +52,6 @@ export default {
   getLoggedUserId,
   saveLooggedUserEmail,
   getLoggedUserEmail,
+  saveActiveChatId,
+  getActiveChatId,
 };
