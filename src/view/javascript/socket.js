@@ -30,6 +30,13 @@ const sendMessage = (e) => {
   }
 };
 
+const signoutAction = (e) => {
+  e.preventDefault();
+  storage.saveLoggedUserId(undefined);
+  storage.saveLooggedUserEmail(undefined);
+  window.location.replace("/");
+};
+
 const initSocket = () => {
   const loggedUser = storage.getLoggedUserId();
   const data = {
@@ -67,6 +74,9 @@ const initSocket = () => {
 
   const submitMessage = document.getElementById("send-message");
   submitMessage.addEventListener("submit", sendMessage);
+
+  const signout = document.getElementById("signout");
+  signout.addEventListener("click", signoutAction);
 };
 
 const changeConnectedState = (user, state) => {

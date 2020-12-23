@@ -138,7 +138,7 @@ const showChats = () => {
       div.className = "message-data";
 
       const img = document.createElement("img");
-      img.src = "../img/profile.jpg";
+      img.src = "../img/profile.png";
       img.className = "chat-img";
 
       const name = document.createElement("H3");
@@ -227,6 +227,7 @@ const showMessages = (messages) => {
     div.appendChild(pre);
     messageContainer.appendChild(div);
   });
+  messageContainer.appendChild(document.createElement("br"));
 
   messageContainer.scrollTop = messageContainer.scrollHeight;
 
