@@ -18,7 +18,6 @@ module.exports = function () {
     socket.broadcast.emit("userConnected", loggedUser);
 
     socket.on("sendMessage", (message) => {
-      message.date = new Date();
       chatHelper.saveMessage(message);
       socket.broadcast.emit("receiveMessage", message);
     });

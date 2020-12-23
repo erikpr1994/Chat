@@ -164,7 +164,7 @@ const showChats = () => {
 
       const textMessage = document.createTextNode(
         chat.messages.length > 0
-          ? chat.messages[chat.messages.length - 1]
+          ? `Ultimo mensaje: ${chat.messages[chat.messages.length - 1].message}`
           : "No hay mensajes aún"
       );
 
@@ -209,7 +209,28 @@ const showMessages = (messages) => {
   while (messageContainer.firstChild)
     messageContainer.removeChild(messageContainer.firstChild);
 
-  sortedMessages.forEach((message) => {});
+  const me = storage.getLoggedUserId();
+
+  sortedMessages.forEach((message) => {
+    const div = document.createElement("div");
+    const pre = document.createElement("pre");
+    const text = document.createTextNode(message.message);
+    if (message.loggedUser === me) {
+      div.className = "message-container mine";
+      pre.className = "message message-mine";
+    } else {
+      div.className = "message-container other";
+      pre.className = "message";
+    }
+
+    pre.appendChild(text);
+    div.appendChild(pre);
+    messageContainer.appendChild(div);
+  });
+
+  messageContainer.scrollTop = messageContainer.scrollHeight;
+
+  showChats();
 };
 
 const createChat = async (friendId) => {
@@ -246,6 +267,7 @@ const initChat = () => {
 
   const data = document.createElement("h3");
   const text = document.createTextNode("No hay ningún chat abierto");
+  storage.saveActiveChatId(null);
 
   data.appendChild(text);
   node.appendChild(data);
@@ -255,4 +277,5 @@ const initChat = () => {
 
 export default {
   showContacts,
+  showMessages,
 };

@@ -1,20 +1,33 @@
 import storage from "./localstorage.js";
 
-import chat from "./chat.js";
+import chatFunctions from "./chat.js";
 
 let socket;
 
 const sendMessage = (e) => {
   e.preventDefault();
-  const message = {
-    message: document.getElementById("written-message").value,
-    loggedUser: storage.getLoggedUserId(),
-    chatId: storage.getActiveChatId(),
-  };
+  const activeChatId = storage.getActiveChatId();
+  if (activeChatId !== "null") {
+    const message = {
+      date: new Date(),
+      message: document.getElementById("written-message").value,
+      loggedUser: storage.getLoggedUserId(),
+      chatId: storage.getActiveChatId(),
+    };
 
-  if (storage.getActiveChatId()) socket.emit("sendMessage", message);
+    socket.emit("sendMessage", message);
 
-  document.getElementById("written-message").value = "";
+    document.getElementById("written-message").value = "";
+    const chats = storage.getChats();
+    const searchedChat =
+      chats[chats.findIndex((chat) => chat._id === activeChatId)];
+    searchedChat.messages.push(message);
+    chats[chats.findIndex((chat) => chat._id === activeChatId)] = searchedChat;
+    storage.saveData({ friends: null, chats });
+    chatFunctions.showMessages(searchedChat.messages);
+  } else {
+    alert("No hay ningún chat abierto");
+  }
 };
 
 const initSocket = () => {
@@ -37,11 +50,19 @@ const initSocket = () => {
   });
 
   socket.on("receiveMessage", async (message) => {
+    let messageToShow;
     const chats = storage.getChats();
     const updatedChats = chats.map((chat) => {
-      if (chat._id === message.chatId) chat.messages.push(message);
+      if (chat._id === message.chatId) {
+        chat.messages.push(message);
+        if (storage.getActiveChatId() === chat._id)
+          messageToShow = chat.messages;
+      }
+      return chat;
     });
+
     storage.saveData({ chats: updatedChats, friend: null });
+    chatFunctions.showMessages(messageToShow);
   });
 
   const submitMessage = document.getElementById("send-message");
@@ -57,7 +78,7 @@ const changeConnectedState = (user, state) => {
 
     storage.saveData({ chats: null, friends });
 
-    if (document.getElementById("forAddFriend")) chat.showContacts();
+    if (document.getElementById("forAddFriend")) chatFunctions.showContacts();
   }
 };
 
