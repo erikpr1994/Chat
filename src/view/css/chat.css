@@ -137,10 +137,6 @@ main {
   place-self: end;
 }
 
-.other {
-  grid-template-columns: 30% 70%;
-}
-
 .message-info {
   display: flex;
   flex-direction: column;
