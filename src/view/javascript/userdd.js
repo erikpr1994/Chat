@@ -1,5 +1,5 @@
-import webStorage from "./webstorage.js";
-import roomsHandler from "./rooms.js";
+import webStorage from "../js/webstorage.js";
+import roomsHandler from "../js/rooms.js";
 
 function drop(ev) {
   ev.preventDefault();

@@ -1,4 +1,8 @@
-const roomModel = require("./roomModel");
-const userModel = require("./userModel");
+const mongoose = require("mongoose");
 
-module.exports = { roomModel, userModel };
+mongoose.connect("mongodb://localhost:27017/chat", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+module.exports = mongoose;

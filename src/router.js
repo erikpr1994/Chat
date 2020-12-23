@@ -1,14 +1,12 @@
 const router = require("express").Router();
 
 const usersController = require("./controllers/userController");
-const roomsController = require("./controllers/roomController");
+const chatController = require("./controllers/chatController");
 
 router.get("/login", usersController.checkLogin);
-router.get("/users", usersController.getUsers);
 router.post("/register", usersController.register);
-router.get("/rooms", roomsController.getRooms);
-router.get("/room/:roomId", roomsController.getRoom);
-router.post("/room", roomsController.createRoom);
-router.post("/addUserToRoom", roomsController.addUserToRoom);
+router.get("/getData", usersController.getData);
+router.post("/addFriend", usersController.addFriend);
+router.post("/createChat", chatController.createChat);
 
 module.exports = router;
